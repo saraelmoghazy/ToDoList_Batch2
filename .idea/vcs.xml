@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Clean-Architecture-Android" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DaggerPractice" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New folder (4)/Hotels" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New folder (4)/HotelsTask/HotelsTaskBatch2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New folder (4)/Paging/android-paging" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New folder (4)/WebkeyzTraining/Webkeyz Training/Webkeyz_Training" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New folder (4)/WebkeyzTraining/todoList/ToDoList_Batch2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New folder (4)/android-databinding" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New folder (4)/task1/HotelsTask_Training_2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/New folder (4)/workmanager/android-workmanager" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/android-workmanager" vcs="Git" />
+  </component>
+</project>
