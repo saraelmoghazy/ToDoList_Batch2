@@ -2,7 +2,7 @@
 
 Build a fully material To-Do app which help user to view his tasks, add, remove and edit. General project requirements
 
-• Minimum API version 21. • Use Navigation component • Use MDC components • Use MVVM pattern • Use Dagger 2 , RxJava and Data binding • Cache user tasks (online /offline) • Use sandbox site to mock 4 web services (getTasks , add , edit , remove) • Show loading indicator whenever there is a network request, hide when done. • Error handling: (Create custom Rx retrofit Adapter which help you to override RX Retrofit adapter call back onError() and return (code /message) instead of Expectation).
+• Minimum API version 21. • Use Navigation component • Use MDC components • Use MVVM pattern • Use Dagger 2 , RxJava and Data binding • Use sandbox site to mock 4 web services (getTasks , add , edit , remove) • Show loading indicator whenever there is a network request, hide when done. • Error handling: (Create custom Rx retrofit Adapter which help you to override RX Retrofit adapter call back onError() and return (code /message) instead of Expectation).
 
 o No internet connection: show full dialog include message “No Internet connection” with retry button. o Show toast message in case of api error (meaningful message)
 
@@ -20,7 +20,7 @@ If tasks is empty show in the center of screen (Icon / text) to inform user that
 
 The application displays a list of tasks (name/ date and time / icon with first letter of task) with Fab button to add new task
 
-When long click on task show 2 toolbar actions (remove/finish tasks) • Remove will remove task and update list, show confirmation dialog first. • Finish will update task status.
+When long click on task show 2 toolbar actions (finish tasks) and swipe will remove task • Remove will remove task and update list, show confirmation dialog first. • Finish will update task status.
 
 Screen 2: Add task
 
