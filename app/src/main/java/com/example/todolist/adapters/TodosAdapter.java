@@ -1,6 +1,6 @@
 package com.example.todolist.adapters;
 
-import android.view.View;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -11,7 +11,7 @@ import com.example.todolist.models.Todo;
 import java.util.List;
 
 public class TodosAdapter extends SingleLayoutAdapter {
-
+    private static final String TAG = "TodosAdapter";
     private List<Todo> todoList;
     private OnCardClickListener onCardClickListener;
 
@@ -25,9 +25,14 @@ public class TodosAdapter extends SingleLayoutAdapter {
     public void onBindViewHolder(@NonNull TodoViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         ItemTodoBinding binding = DataBindingUtil.findBinding(holder.itemView);
+        binding.cardViewTodo.setOnClickListener(v -> {
+            onCardClickListener.onCardClicked(binding.cardViewTodo, position);
+            Log.d(TAG, "onBindViewHolder: click");
+        });
         binding.cardViewTodo.setOnLongClickListener(v -> {
-            onCardClickListener.onCardClicked(binding.cardViewTodo,position);
-            return false;
+            onCardClickListener.onCardClicked(binding.cardViewTodo, position);
+            Log.d(TAG, "onBindViewHolder: long click");
+            return true;
         });
     }
 

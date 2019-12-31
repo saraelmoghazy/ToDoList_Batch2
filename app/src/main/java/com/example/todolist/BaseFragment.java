@@ -4,11 +4,15 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,6 +29,7 @@ import com.example.todolist.viewmodels.BaseViewModel;
 import com.example.todolist.viewmodels.ViewModelProviderFactory;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,20 +51,20 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Todo List");
         todoList = new ArrayList<>();
         baseViewModel = viewModelProviderFactory.create(BaseViewModel.class);
         baseViewModel.getNotCompletedTodoUseCase();
         fragmentBaseBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_base, container, false);
         observeTodos();
         fragmentBaseBinding.floatingActionButton.setOnClickListener(v -> {
-            FragmentManager fm = getFragmentManager();
+            FragmentManager fm = getParentFragmentManager();
             FullScreenDialogFragment dialogFragment = new FullScreenDialogFragment();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            fragmentTransaction.add(android.R.id.content, dialogFragment).commit();
-//            NavDirections action = BaseFragmentDirections.actionBaseFragmentToFullScreenDialogFragment();
-//            Navigation.findNavController(v).navigate(action);
+            fragmentTransaction.add(android.R.id.content, dialogFragment).addToBackStack("baseFragment").commit();
         });
+        setHasOptionsMenu(true);
         return fragmentBaseBinding.getRoot();
     }
 
@@ -117,11 +122,14 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
     @Override
     public void onCardClicked(MaterialCardView materialCardView, int position) {
         Log.d(TAG, "onCardClicked: " + todoList.get(position));
+        Todo todo = todoList.get(position);
         if (!materialCardView.isChecked()) {
             materialCardView.setChecked(true);
-            todoList.get(position).setCompleted(true);
-            baseViewModel.updateTodoUseCase(todoList.get(position));
-            todoList.remove(todoList.get(position));
+            todo.setCompleted(true);
+            baseViewModel.updateTodoUseCase(todo);
+            todoList.remove(todo);
+            Snackbar.make(getView(), "Moved to completed todos", Snackbar.LENGTH_SHORT)
+                    .setAnchorView(fragmentBaseBinding.floatingActionButton).show();
         }
     }
 
@@ -136,6 +144,35 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
             Todo todo = todoList.get(viewHolder.getAdapterPosition());
             todoList.remove(todo);
             baseViewModel.deleteTodoUseCase(todo);
+            Snackbar.make(getView(), "Todo is deleted", Snackbar.LENGTH_LONG)
+                    .setAnchorView(fragmentBaseBinding.floatingActionButton)
+                    .setAction("undo", v -> {
+                        todoList.add(todo);
+                        baseViewModel.postTodoUseCase(todo);
+                    }).show();
         }
     };
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.completed_todos: {
+                FragmentManager fm = getParentFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction().replace(R.id.frame_container, new CompletedTodosFragment());
+                ft.addToBackStack(null);
+                ft.commit();
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+    }
+
 }

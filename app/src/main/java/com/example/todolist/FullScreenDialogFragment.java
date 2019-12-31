@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +23,7 @@ import com.example.todolist.models.Todo;
 import com.example.todolist.viewmodels.BaseViewModel;
 import com.example.todolist.viewmodels.ViewModelProviderFactory;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import javax.inject.Inject;
 
@@ -32,6 +34,7 @@ public class FullScreenDialogFragment extends DaggerDialogFragment {
     private BaseViewModel viewModel;
     private FragmentDialogFullscreenBinding binding;
     private boolean closeButton;
+
     @Inject
     ViewModelProviderFactory viewModelProviderFactory;
 
@@ -47,22 +50,32 @@ public class FullScreenDialogFragment extends DaggerDialogFragment {
         });
         binding.buttonSave.setOnClickListener(v ->
         {
-            closeButton = false;
             String title = binding.editTextTitle.getText().toString();
             String content = binding.editTextContent.getText().toString();
             Todo.Builder builder = new Todo.Builder();
-            if (!TextUtils.isEmpty(title)) {
-                builder.setTitle(title);
+            if (TextUtils.isEmpty(title) && TextUtils.isEmpty(content)) {
+                closeButton = true;
+                dismiss();
+            } else {
+                Log.d(TAG, "onCreateView: else");
+                closeButton = false;
+                if (!TextUtils.isEmpty(title)) {
+                    builder.setTitle(title);
+                }
+                if (!TextUtils.isEmpty(content)) {
+                    builder.setContent(content);
+                }
+                Todo todo = builder.build();
+                Log.d(TAG, "onCreateView: todo id: " + todo.getId());
+                Log.d(TAG, "onCreateView: todo title: " + todo.getTitle());
+                viewModel.postTodoUseCase(todo);
+                Snackbar.make(getView(), "todo is saved", Snackbar.LENGTH_SHORT)
+                        .setAnchorView(R.id.floating_action_button)
+                        .show();
+                dismiss();
             }
-            if (!TextUtils.isEmpty(content)) {
-                builder.setContent(content);
-            }
-            Todo todo = builder.build();
-            Log.d(TAG, "onCreateView: todo id: " + todo.getId());
-            Log.d(TAG, "onCreateView: todo title: " + todo.getTitle());
-            viewModel.postTodoUseCase(todo);
-            dismiss();
         });
+
         return binding.getRoot();
     }
 
@@ -77,9 +90,10 @@ public class FullScreenDialogFragment extends DaggerDialogFragment {
 
     @Override
     public void dismiss() {
-        if (!closeButton) {
+        FragmentManager fm = getParentFragmentManager();
+        fm.popBackStack("baseFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (!closeButton) { // save button clicked
             super.dismiss();
-            FragmentManager fm = getFragmentManager();
             FragmentTransaction ft = fm.beginTransaction().replace(R.id.frame_container, new BaseFragment());
             ft.commit();
         } else {
@@ -87,5 +101,17 @@ public class FullScreenDialogFragment extends DaggerDialogFragment {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getActivity().INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(binding.getRoot().getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 }

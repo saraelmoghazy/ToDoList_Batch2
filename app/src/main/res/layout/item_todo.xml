@@ -17,12 +17,11 @@
             android:id="@+id/card_view_todo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mtrl_card_spacing"
             android:checkable="true"
             android:clickable="true"
             android:focusable="true"
-            android:layout_marginLeft="@dimen/mtrl_card_spacing"
-            android:layout_marginTop="@dimen/mtrl_card_spacing"
-            android:layout_marginRight="@dimen/mtrl_card_spacing"
+            app:rippleColor="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -30,23 +29,26 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="5dp">
 
-            <TextView
-                android:id="@+id/text_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{obj.title}"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{obj.title}"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primaryText"/>
 
-            <TextView
-                android:id="@+id/text_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{obj.content}"
-                android:textSize="24sp"
-                android:layout_below="@id/text_title"/>
+                <TextView
+                    android:id="@+id/text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_title"
+                    android:text="@{obj.content}"
+                    android:textSize="24sp"
+                    android:textColor="@color/secondaryText"/>
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -15,18 +15,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:srcCompat="@drawable/ic_add_black_24dp"
-            app:backgroundTint="@color/colorAccent"
-            app:tint="@color/icons"
-            />
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
