@@ -24,7 +24,7 @@ public class GetNotCompletedTodoUseCase extends BaseUseCase<List<Todo>> {
     }
 
     @Override
-    protected Observable<Response<List<Todo>>> createObservableUseCase() {
+    protected Observable<List<Todo>> createObservableUseCase() {
         return this.repository.getNotCompletedTodoList();
     }
 }

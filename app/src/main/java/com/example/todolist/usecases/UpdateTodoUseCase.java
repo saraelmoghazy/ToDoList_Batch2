@@ -23,7 +23,7 @@ public class UpdateTodoUseCase extends BaseUseCase<Void> {
     }
 
     @Override
-    protected Observable<Response<Void>> createObservableUseCase() {
+    protected Observable<Void> createObservableUseCase() {
         return repository.updateTodo(todo);
     }
 

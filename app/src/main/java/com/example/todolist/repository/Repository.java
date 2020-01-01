@@ -2,16 +2,18 @@ package com.example.todolist.repository;
 
 import com.example.todolist.models.Todo;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 
-public interface Repository<T> {
-    Observable<T> getCompletedTodoList();
+public interface Repository {
+    Observable<List<Todo>> getCompletedTodoList();
 
-    Observable<T> getNotCompletedTodoList();
+    Observable<List<Todo>> getNotCompletedTodoList();
 
-    Observable<T> postTodo(Todo todo);
+    Observable<Todo> postTodo(Todo todo);
 
-    Observable<T> updateTodo(Todo todo);
+    Observable<Void> updateTodo(Todo todo);
 
-    Observable<T> deleteTodo(long id);
+    Observable<Void> deleteTodo(long id);
 }

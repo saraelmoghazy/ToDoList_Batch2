@@ -17,13 +17,13 @@ public abstract class BaseUseCase<T> {
         compositeDisposable = new CompositeDisposable();
     }
 
-    public void execute(DisposableObserver<Response<T>> disposableObserver) {
+    public void execute(DisposableObserver<T> disposableObserver) {
 
         if (disposableObserver == null) {
             throw new IllegalArgumentException("disposableObserver must not be null");
         }
 
-        final Observable<Response<T>> observable =
+        final Observable<T> observable =
                 this.createObservableUseCase().subscribeOn(executorThread).observeOn(uiThread);
 
         DisposableObserver observer = observable.subscribeWith(disposableObserver);
@@ -36,5 +36,5 @@ public abstract class BaseUseCase<T> {
         }
     }
 
-    protected abstract Observable<Response<T>> createObservableUseCase();
+    protected abstract Observable<T> createObservableUseCase();
 }

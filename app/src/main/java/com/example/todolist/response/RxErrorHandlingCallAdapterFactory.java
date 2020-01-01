@@ -46,12 +46,8 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
         @SuppressWarnings("unchecked")
         @Override
         public Observable adapt(Call call) {
-            return ((Observable) wrapped.adapt(call)).onErrorResumeNext(new Function<Throwable, Observable>() {
-                @Override
-                public Observable apply(Throwable throwable) throws Exception {
-                    return Observable.error(asRetrofitException(throwable));
-                }
-            });
+            return ((Observable) wrapped.adapt(call)).onErrorResumeNext((Function<Throwable, Observable>) throwable ->
+                    Observable.error(asRetrofitException(throwable)));
         }
 
         private RetrofitException asRetrofitException(Throwable throwable) {

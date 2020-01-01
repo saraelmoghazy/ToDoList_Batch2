@@ -76,12 +76,8 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
                     break;
                 }
                 case SUCCESS: {
-                    Response response = (Response) networkState.data;
-                    Log.d(TAG, "onChanged: case success: " + ((Response) networkState.data).body());
                     isLoading(networkState.status);
-                    if (response.body() != null) {
-                        todoList.addAll((List<Todo>) response.body());
-                    }
+                    todoList.addAll((List<Todo>) networkState.data);
                     new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(fragmentBaseBinding.recyclerViewTodos);
                     adapter = new TodosAdapter(this, R.layout.item_todo, todoList);
                     fragmentBaseBinding.recyclerViewTodos.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -108,9 +104,9 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
 
     private void showError() {
         new MaterialAlertDialogBuilder(getContext())
-                .setTitle("No Internet Connection")
-                .setMessage("Please check your internet connection and try again")
-                .setPositiveButton("Retry", this)
+                .setTitle(R.string.no_internet_connection)
+                .setMessage(R.string.check_internet_connection)
+                .setPositiveButton(R.string.retry, this)
                 .show();
     }
 
@@ -128,7 +124,7 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
             todo.setCompleted(true);
             baseViewModel.updateTodoUseCase(todo);
             todoList.remove(todo);
-            Snackbar.make(getView(), "Moved to completed todos", Snackbar.LENGTH_SHORT)
+            Snackbar.make(getView(), R.string.moved_to_completed, Snackbar.LENGTH_SHORT)
                     .setAnchorView(fragmentBaseBinding.floatingActionButton).show();
         }
     }
@@ -144,9 +140,9 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
             Todo todo = todoList.get(viewHolder.getAdapterPosition());
             todoList.remove(todo);
             baseViewModel.deleteTodoUseCase(todo);
-            Snackbar.make(getView(), "Todo is deleted", Snackbar.LENGTH_LONG)
+            Snackbar.make(getView(), R.string.todo_deleted, Snackbar.LENGTH_LONG)
                     .setAnchorView(fragmentBaseBinding.floatingActionButton)
-                    .setAction("undo", v -> {
+                    .setAction(R.string.undo, v -> {
                         todoList.add(todo);
                         baseViewModel.postTodoUseCase(todo);
                     }).show();

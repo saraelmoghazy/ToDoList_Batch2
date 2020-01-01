@@ -15,17 +15,17 @@ import retrofit2.http.Path;
 
 public interface TodoApi {
     @GET("todos/notCompleted")
-    Observable<Response<List<Todo>>> getNotCompletedTodos();
+    Observable<List<Todo>> getNotCompletedTodos();
 
     @GET("todos/completed")
-    Observable<Response<List<Todo>>> getCompletedTodos();
+    Observable<List<Todo>> getCompletedTodos();
 
     @POST("todos")
-    Observable<Response<Void>> postTodo(@Body Todo todo);
+    Observable<Void> postTodo(@Body Todo todo);
 
     @PUT("todos")
-    Observable<Response<Void>> updateTodo(@Body Todo todo);
+    Observable<Void> updateTodo(@Body Todo todo);
 
     @DELETE("todos/{id}")
-    Observable<Response<Void>> deleteTodo(@Path("id") long id);
+    Observable<Void> deleteTodo(@Path("id") long id);
 }

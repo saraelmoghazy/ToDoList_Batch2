@@ -23,7 +23,7 @@ public class PostTodoUseCase extends BaseUseCase<Todo> {
     }
 
     @Override
-    protected Observable<Response<Todo>> createObservableUseCase() {
+    protected Observable<Todo> createObservableUseCase() {
         return repository.postTodo(todo);
     }
 

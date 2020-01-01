@@ -20,12 +20,12 @@ public class TodoRepository implements Repository {
     }
 
     @Override
-    public Observable<Response<List<Todo>>> getCompletedTodoList() {
+    public Observable<List<Todo>> getCompletedTodoList() {
         return todoApi.getCompletedTodos();
     }
 
     @Override
-    public Observable<Response<List<Todo>>> getNotCompletedTodoList() {
+    public Observable<List<Todo>> getNotCompletedTodoList() {
         return todoApi.getNotCompletedTodos();
     }
 
