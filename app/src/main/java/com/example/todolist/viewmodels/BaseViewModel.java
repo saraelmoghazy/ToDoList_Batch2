@@ -16,7 +16,7 @@ import com.example.todolist.utils.NetworkState;
 import javax.inject.Inject;
 
 public class BaseViewModel extends ViewModel {
-    private static final String TAG = "BaseViewModel";
+    private static final String TAG = BaseViewModel.class.getSimpleName();
     private MutableLiveData<NetworkState> networkState;
     private BaseObserver baseObserver;
     private GetCompletedTodoUseCase getCompletedTodoUseCase;
@@ -37,6 +37,7 @@ public class BaseViewModel extends ViewModel {
         this.postTodoUseCase = postTodoUseCase;
         this.updateTodoUseCase = updateTodoUseCase;
         this.deleteTodoUseCase = deleteTodoUseCase;
+        getNotCompletedTodoUseCase();
     }
 
     public void getCompletedTodoUseCase() {
@@ -44,7 +45,7 @@ public class BaseViewModel extends ViewModel {
         getCompletedTodoUseCase.execute(baseObserver);
     }
 
-    public void getNotCompletedTodoUseCase() {
+    private void getNotCompletedTodoUseCase() {
         baseObserver = new BaseObserver(this);
         getNotCompletedTodoUseCase.execute(baseObserver);
     }

@@ -54,7 +54,6 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Todo List");
         todoList = new ArrayList<>();
         baseViewModel = viewModelProviderFactory.create(BaseViewModel.class);
-        baseViewModel.getNotCompletedTodoUseCase();
         fragmentBaseBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_base, container, false);
         observeTodos();
         fragmentBaseBinding.floatingActionButton.setOnClickListener(v -> {
