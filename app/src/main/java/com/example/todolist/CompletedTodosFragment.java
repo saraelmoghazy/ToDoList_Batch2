@@ -68,10 +68,7 @@ public class CompletedTodosFragment extends DaggerFragment implements
                 }
                 case SUCCESS: {
                     isLoading(networkState.status);
-                    Response response = (Response) networkState.data;
-                    if (response.body() != null) {
-                        todoList.addAll((List<Todo>) response.body());
-                    }
+                    todoList.addAll((List<Todo>) networkState.data);
                     adapter = new TodosAdapter(this, R.layout.item_todo, todoList);
                     binding.recyclerViewTodos.setLayoutManager(new LinearLayoutManager(getContext()));
                     binding.recyclerViewTodos.setAdapter(adapter);

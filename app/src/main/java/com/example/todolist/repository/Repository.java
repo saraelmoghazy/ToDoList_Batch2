@@ -1,5 +1,6 @@
 package com.example.todolist.repository;
 
+import com.example.todolist.models.StatusToDoResponse;
 import com.example.todolist.models.Todo;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface Repository {
 
     Observable<Todo> postTodo(Todo todo);
 
-    Observable<Void> updateTodo(Todo todo);
+    Observable<StatusToDoResponse> updateTodo(Todo todo);
 
     Observable<Void> deleteTodo(long id);
 }

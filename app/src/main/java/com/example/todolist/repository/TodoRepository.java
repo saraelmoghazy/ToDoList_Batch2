@@ -1,5 +1,6 @@
 package com.example.todolist.repository;
 
+import com.example.todolist.models.StatusToDoResponse;
 import com.example.todolist.models.Todo;
 import com.example.todolist.network.TodoApi;
 
@@ -35,7 +36,7 @@ public class TodoRepository implements Repository {
     }
 
     @Override
-    public Observable updateTodo(Todo todo) {
+    public Observable<StatusToDoResponse> updateTodo(Todo todo) {
         return todoApi.updateTodo(todo);
     }
 

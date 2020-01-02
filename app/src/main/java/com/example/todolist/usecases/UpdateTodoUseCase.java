@@ -1,5 +1,6 @@
 package com.example.todolist.usecases;
 
+import com.example.todolist.models.StatusToDoResponse;
 import com.example.todolist.models.Todo;
 import com.example.todolist.repository.Repository;
 
@@ -10,7 +11,7 @@ import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import retrofit2.Response;
 
-public class UpdateTodoUseCase extends BaseUseCase<Void> {
+public class UpdateTodoUseCase extends BaseUseCase<StatusToDoResponse> {
     private Repository repository;
     private Todo todo;
 
@@ -23,7 +24,7 @@ public class UpdateTodoUseCase extends BaseUseCase<Void> {
     }
 
     @Override
-    protected Observable<Void> createObservableUseCase() {
+    protected Observable<StatusToDoResponse> createObservableUseCase() {
         return repository.updateTodo(todo);
     }
 

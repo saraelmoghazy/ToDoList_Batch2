@@ -29,7 +29,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerDialogFragment;
 
-public class FullScreenDialogFragment extends DaggerDialogFragment {
+public class AddToDoFragment extends DaggerDialogFragment {
     private static final String TAG = "FullScreenDialogFragmen";
     private BaseViewModel viewModel;
     private FragmentDialogFullscreenBinding binding;
@@ -94,7 +94,7 @@ public class FullScreenDialogFragment extends DaggerDialogFragment {
         fm.popBackStack("baseFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         if (!closeButton) { // save button clicked
             super.dismiss();
-            FragmentTransaction ft = fm.beginTransaction().replace(R.id.frame_container, new BaseFragment());
+            FragmentTransaction ft = fm.beginTransaction().replace(R.id.frame_container, new ToDoListFragment());
             ft.commit();
         } else {
             super.dismiss();

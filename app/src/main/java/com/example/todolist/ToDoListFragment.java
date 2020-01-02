@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.todolist.adapters.OnCardClickListener;
 import com.example.todolist.adapters.TodosAdapter;
 import com.example.todolist.databinding.FragmentBaseBinding;
+import com.example.todolist.models.StatusToDoResponse;
 import com.example.todolist.models.Todo;
 import com.example.todolist.utils.NetworkState;
 import com.example.todolist.viewmodels.BaseViewModel;
@@ -37,9 +39,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerFragment;
-import retrofit2.Response;
 
-public class BaseFragment extends DaggerFragment implements DialogInterface.OnClickListener, OnCardClickListener {
+public class ToDoListFragment extends DaggerFragment implements DialogInterface.OnClickListener, OnCardClickListener {
     private static final String TAG = "BaseFragment";
     private BaseViewModel baseViewModel;
     private FragmentBaseBinding fragmentBaseBinding;
@@ -58,7 +59,7 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
         observeTodos();
         fragmentBaseBinding.floatingActionButton.setOnClickListener(v -> {
             FragmentManager fm = getParentFragmentManager();
-            FullScreenDialogFragment dialogFragment = new FullScreenDialogFragment();
+            AddToDoFragment dialogFragment = new AddToDoFragment();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.add(android.R.id.content, dialogFragment).addToBackStack("baseFragment").commit();
@@ -76,7 +77,10 @@ public class BaseFragment extends DaggerFragment implements DialogInterface.OnCl
                 }
                 case SUCCESS: {
                     isLoading(networkState.status);
-                    todoList.addAll((List<Todo>) networkState.data);
+                    if (networkState.data instanceof StatusToDoResponse)
+                        Toast.makeText(getActivity(), "complete", Toast.LENGTH_LONG).show();
+                    else
+                        todoList.addAll((List<Todo>) networkState.data);
                     new ItemTouchHelper(itemTouchHelper).attachToRecyclerView(fragmentBaseBinding.recyclerViewTodos);
                     adapter = new TodosAdapter(this, R.layout.item_todo, todoList);
                     fragmentBaseBinding.recyclerViewTodos.setLayoutManager(new LinearLayoutManager(getContext()));

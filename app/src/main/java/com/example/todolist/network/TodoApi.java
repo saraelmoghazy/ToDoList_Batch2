@@ -1,5 +1,6 @@
 package com.example.todolist.network;
 
+import com.example.todolist.models.StatusToDoResponse;
 import com.example.todolist.models.Todo;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface TodoApi {
     Observable<Void> postTodo(@Body Todo todo);
 
     @PUT("todos")
-    Observable<Void> updateTodo(@Body Todo todo);
+    Observable<StatusToDoResponse> updateTodo(@Body Todo todo);
 
     @DELETE("todos/{id}")
     Observable<Void> deleteTodo(@Path("id") long id);

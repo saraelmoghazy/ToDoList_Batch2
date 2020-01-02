@@ -2,7 +2,7 @@ package com.example.todolist.di;
 
 import android.app.Application;
 
-import com.example.todolist.BaseApplication;
+import com.example.todolist.ToDoApplication;
 
 import javax.inject.Singleton;
 
@@ -19,7 +19,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
                 ViewModelFactoryModule.class,
                 ActivityBuildersModule.class}
 )
-public interface AppComponent extends AndroidInjector<BaseApplication> {
+public interface AppComponent extends AndroidInjector<ToDoApplication> {
 
     @Component.Builder
     interface Builder {

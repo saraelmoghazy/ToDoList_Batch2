@@ -1,8 +1,8 @@
 package com.example.todolist.di;
 
-import com.example.todolist.BaseFragment;
+import com.example.todolist.ToDoListFragment;
 import com.example.todolist.CompletedTodosFragment;
-import com.example.todolist.FullScreenDialogFragment;
+import com.example.todolist.AddToDoFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -10,10 +10,10 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
-    abstract BaseFragment contributeBaseFragment();
+    abstract ToDoListFragment contributeBaseFragment();
 
     @ContributesAndroidInjector
-    abstract FullScreenDialogFragment contributeFullScreenDialogFragment();
+    abstract AddToDoFragment contributeFullScreenDialogFragment();
 
     @ContributesAndroidInjector
     abstract CompletedTodosFragment contributeCompletedTodosFragment();

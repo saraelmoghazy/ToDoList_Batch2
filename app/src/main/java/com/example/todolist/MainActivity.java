@@ -17,7 +17,7 @@ public class MainActivity extends DaggerAppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frame_container, new BaseFragment(), "BaseFragment");
+        fragmentTransaction.add(R.id.frame_container, new ToDoListFragment(), "BaseFragment");
         fragmentTransaction.commit();
     }
 
